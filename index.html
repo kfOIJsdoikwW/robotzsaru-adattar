@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>A.K.T.A. - Központi Adattár</title>
+    <style>
+        :root {
+            --police-blue: #00d4ff;
+            --dark-blue: #0a192f;
+            --error-red: #ff3b3b;
+            --bg-dark: #050a14;
+        }
+
+        body { 
+            background-color: var(--bg-dark); 
+            color: var(--police-blue); 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            padding: 20px;
+        }
+
+        .dashboard { 
+            border: 1px solid var(--police-blue); 
+            background: rgba(0, 212, 255, 0.05);
+            padding: 40px; 
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.1); 
+            width: 100%; 
+            max-width: 800px; 
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        /* Hiba animáció */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        .error-shake { animation: shake 0.2s ease-in-out 0s 2; border-color: var(--error-red); }
+
+        h2 { text-transform: uppercase; letter-spacing: 3px; border-bottom: 1px solid var(--police-blue); padding-bottom: 15px; }
+        
+        input { 
+            background: var(--dark-blue); 
+            border: 1px solid var(--police-blue); 
+            color: #ffffff; 
+            padding: 15px; 
+            width: 80%;
+            text-align: center; 
+            font-size: 1.1rem;
+            margin-bottom: 30px; /* Megnövelt távolság a gomb előtt */
+            outline: none;
+        }
+
+        button.main-btn { 
+            background: var(--police-blue); 
+            color: var(--bg-dark); 
+            border: none; 
+            padding: 15px 40px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            text-transform: uppercase;
+            width: 60%;
+            transition: 0.3s;
+        }
+
+        button.main-btn:hover { background: #fff; box-shadow: 0 0 15px #fff; }
+
+        .hidden { display: none; }
+
+        /* Bizonyíték lista stílusa */
+        .evidence-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 15px; 
+            text-align: left; 
+            margin-top: 30px;
+        }
+
+        .evidence-card { 
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-left: 4px solid var(--police-blue);
+            transition: 0.3s;
+        }
+
+        .evidence-card:hover { background: rgba(0, 212, 255, 0.1); }
+
+        .evidence-card h4 { margin: 0 0 10px 0; font-size: 0.9rem; color: #fff; }
+        
+        .download-link { 
+            color: var(--police-blue); 
+            text-decoration: none; 
+            font-size: 0.8rem; 
+            font-weight: bold;
+            border: 1px solid var(--police-blue);
+            padding: 5px 10px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .download-link:hover { background: var(--police-blue); color: var(--bg-dark); }
+
+        #status-msg { margin-bottom: 10px; font-weight: bold; }
+
+        /* Digitális bizonyíték szekció */
+        .digital-evidence {
+            grid-column: span 2;
+            border: 1px dashed var(--police-blue);
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main-container" class="dashboard">
+        <div id="login-section">
+            <h2>MISKOLCI RENDŐRKAPITÁNYSÁG</h2>
+            <p>A.K.T.A. Központi Bizonyítékkezelő v4.2</p>
+            <div id="status-msg">RENDSZER ONLINE</div>
+            <input type="text" id="access-code" placeholder="ADJA MEG AZ ÜGYIRATSZÁMOT" autocomplete="off">
+            <br>
+            <button class="main-btn" onclick="processLogin()">ADATOK LEKÉRÉSE</button>
+        </div>
+
+        <div id="evidence-section" class="hidden">
+            <h2>HOZZÁFÉRÉS ENGEDÉLYEZVE</h2>
+            <p>Aktaszám: 05010/1142/2026.bü.</p>
+            
+            <div class="evidence-grid">
+                <div class="evidence-card">
+                    <h4>Ambuláns lap</h4>
+                    <p style="font-size: 0.7rem;">Kelt: 2026.04.12. | Diagnózis: F13.1, F10.0</p>
+                    <a href="ambulans_lap.pdf" target="_blank" class="download-link">MEGTEKINTÉS</a>
+                </div>
+
+                <div class="evidence-card">
+                    <h4>Rendőrségi jelentés</h4>
+                    <p style="font-size: 0.7rem;">Helyszíni szemle és intézkedési napló.</p>
+                    <a href="jelentes.pdf" target="_blank" class="download-link">MEGTEKINTÉS</a>
+                </div>
+
+                <div class="evidence-card">
+                    <h4>Toxikológiai jelentés</h4>
+                    <p style="font-size: 0.7rem;">GC-MS eredmények: Benzodiazepin (980 ng/ml).</p>
+                    <a href="toxikologia.pdf" target="_blank" class="download-link">MEGTEKINTÉS</a>
+                </div>
+
+                <div class="evidence-card">
+                    <h4>Bankszámlakivonat</h4>
+                    <p style="font-size: 0.7rem;">Időszak: 2026.03.31 - 2026.04.XX.</p>
+                    <a href="bankszamla.pdf" target="_blank" class="download-link">MEGTEKINTÉS</a>
+                </div>
+
+                <div class="evidence-card">
+                    <h4>Kihallgatási jegyzőkönyv</h4>
+                    <p style="font-size: 0.7rem;">Gyanúsított: Németh Luca | Idő: 14:20</p>
+                    <a href="kihallgatas.pdf" target="_blank" class="download-link">MEGTEKINTÉS</a>
+                </div>
+
+                <div class="evidence-card digital-evidence">
+                    <h4>Digitális bizonyítékok (BJ: 2026/BJ/1142)</h4>
+                    <p style="font-size: 0.7rem; color: #aaa;">Lefoglalt mobilkészülék médiafájljai és metaadatai.</p>
+                    <div id="image-placeholder" style="margin-top: 15px; color: #555;">
+                        [ MÉDIAFÁJLOK BETÖLTÉSE FOLYAMATBAN... ]
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="location.reload()" style="background: none; border: 1px solid gray; color: gray; margin-top: 30px; padding: 10px; cursor: pointer;">RENDSZER LEZÁRÁSA</button>
+        </div>
+    </div>
+
+    <script>
+        const VALID_CODE = "05010/1142/2026.bü.";
+
+        function processLogin() {
+            const input = document.getElementById('access-code');
+            const msg = document.getElementById('status-msg');
+            const container = document.getElementById('main-container');
+
+            if (input.value.trim() === VALID_CODE) {
+                msg.innerText = "AZONOSÍTÁS SIKERES...";
+                msg.style.color = "#00ff88";
+                
+                setTimeout(() => {
+                    document.getElementById('login-section').classList.add('hidden');
+                    document.getElementById('evidence-section').classList.remove('hidden');
+                }, 1000);
+            } else {
+                msg.innerText = "HOZZÁFÉRÉS MEGTAGADVA!";
+                msg.style.color = "var(--error-red)";
+                container.classList.add('error-shake');
+                setTimeout(() => container.classList.remove('error-shake'), 500);
+            }
+        }
+    </script>
+</body>
+</html>
