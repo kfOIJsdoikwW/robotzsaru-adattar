@@ -2,191 +2,9 @@
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A.K.T.A. - Központi Adattár</title>
-    <style>
-        :root {
-            --police-blue: #00d4ff;
-            --dark-blue: #0a192f;
-            --error-red: #ff3b3b;
-            --bg-dark: #050a14;
-            --success-green: #00ff88;
-        }
-
-        body { 
-            background-color: var(--bg-dark); 
-            color: var(--police-blue); 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            min-height: 100vh; 
-            margin: 0; 
-            padding: 20px;
-            overflow-x: hidden;
-        }
-
-        .dashboard { 
-            border: 1px solid var(--police-blue); 
-            background: rgba(0, 212, 255, 0.05);
-            padding: 40px; 
-            box-shadow: 0 0 30px rgba(0, 212, 255, 0.1); 
-            width: 100%; 
-            max-width: 800px; 
-            text-align: center;
-            border-radius: 5px;
-            position: relative;
-        }
-
-        /* Hiba és Siker animációk */
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-        .error-shake { animation: shake 0.2s ease-in-out 0s 2; border-color: var(--error-red) !important; }
-
-        /* Töltőképernyő stílusa */
-        #loading-screen {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .loader-bar {
-            width: 300px;
-            height: 4px;
-            background: #111;
-            margin-top: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .loader-progress {
-            width: 0%;
-            height: 100%;
-            background: var(--police-blue);
-            box-shadow: 0 0 15px var(--police-blue);
-            animation: load 2.5s ease-in-out forwards;
-        }
-
-        @keyframes load {
-            0% { width: 0%; }
-            100% { width: 100%; }
-        }
-
-        h2 { text-transform: uppercase; letter-spacing: 3px; border-bottom: 1px solid var(--police-blue); padding-bottom: 15px; }
-        
-        input { 
-            background: var(--dark-blue); 
-            border: 1px solid var(--police-blue); 
-            color: #ffffff; 
-            padding: 15px; 
-            width: 80%;
-            text-align: center; 
-            font-size: 1.1rem;
-            margin-bottom: 30px; 
-            outline: none;
-        }
-
-        button.main-btn { 
-            background: var(--police-blue); 
-            color: var(--bg-dark); 
-            border: none; 
-            padding: 15px 40px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            text-transform: uppercase;
-            width: 60%;
-            transition: 0.3s;
-        }
-
-        button.main-btn:hover { background: #fff; box-shadow: 0 0 15px #fff; }
-
-        .hidden { display: none !important; }
-
-        /* Rács elrendezés */
-        .evidence-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 15px; 
-            text-align: left; 
-            margin-top: 30px;
-        }
-
-        .evidence-card { 
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            border-left: 4px solid var(--police-blue);
-            transition: 0.3s;
-        }
-
-        /* Személyi fotó stílusa */
-        .profile-img {
-            width: 60px;
-            height: 60px;
-            border: 1px solid var(--police-blue);
-            float: right;
-            object-fit: cover;
-            background: #111;
-        }
-
-        /* Rejtett adatok stílusa */
-        .personal-info-details {
-            display: none;
-            font-size: 0.8rem;
-            margin-top: 10px;
-            color: #ccc;
-            border-top: 1px border rgba(0, 212, 255, 0.2);
-            padding-top: 10px;
-        }
-
-        .evidence-card h4 { margin: 0 0 10px 0; font-size: 0.9rem; color: #fff; }
-        
-        .download-link { 
-            color: var(--police-blue); 
-            text-decoration: none; 
-            font-size: 0.8rem; 
-            font-weight: bold;
-            border: 1px solid var(--police-blue);
-            padding: 5px 10px;
-            display: inline-block;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-
-        .download-link:hover { background: var(--police-blue); color: var(--bg-dark); }
-
-        #status-msg { margin-bottom: 10px; font-weight: bold; transition: 0.3s; }
-
-        /* Digitális bizonyíték képek */
-        .digital-evidence {
-            grid-column: span 2;
-            border: 1px dashed var(--police-blue);
-            padding: 20px;
-            text-align: center;
-        }
-
-        .image-gallery {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 15px;
-            gap: 10px;
-        }
-
-        .evidence-img {
-            width: 30%;
-            height: 100px;
-            background: #111;
-            border: 1px solid var(--police-blue);
-            object-fit: cover;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .evidence-img:hover { transform: scale(1.05); border-color: white; }
-
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -201,7 +19,7 @@
             <button class="main-btn" onclick="processLogin()">ADATOK LEKÉRÉSE</button>
         </div>
 
-        <div id="loading-screen">
+        <div id="loading-screen" class="hidden">
             <h2 style="border:none;">HOZZÁFÉRÉS INICIALIZÁLÁSA...</h2>
             <p>Személyazonosság ellenőrzése és fájlok dekódolása</p>
             <div class="loader-bar">
@@ -233,7 +51,7 @@
                         <b>Bűnügyi előélet:</b> N/A<br>
                         <b>Vércsoport:</b> O+<br>
                         <b>Fegyvertartási engedély:</b> N/A<br>
-                        <b>Utolsó ismert tartózkodási hely:</b> 3530 Miskolc, Tompa Mihály utca 24<br>
+                        <b>E-mail cím:</b>horvathjazmiin09@freemail.hu<br>
                     </div>
                     <span class="download-link" onclick="toggleDetails()">MEGTEKINTÉS</span>
                 </div>
@@ -268,80 +86,30 @@
                 </div>
 
                 <div class="evidence-card digital-evidence">
-    <h4>Digitális bizonyítékok (BJ: 2026/BJ/1142)</h4>
-    <p style="font-size: 0.7rem; color: #aaa;">Lefoglalt digitális médiafájlok.</p>
-    
-    <div id="digital-gallery" style="display: none; margin-top: 15px;">
-        <div class="image-gallery">
-            <img src="kep1.jpg" alt="Bizonyíték 1" class="evidence-img" onclick="window.open(this.src)">
-            <img src="kep2.jpg" alt="Bizonyíték 2" class="evidence-img" onclick="window.open(this.src)">
-            <img src="kep3.jpg" alt="Bizonyíték 3" class="evidence-img" onclick="window.open(this.src)">
-        </div>
-    </div>
-
-    <span class="download-link" onclick="toggleDigitalFiles()">FÁJLOK MEGJELENÍTÉSE</span>
-</div>
+                    <h4>Helyszíni szemle fotók (BJ: 2026/BJ/1142)</h4>
+                    <p style="font-size: 0.7rem; color: #aaa;">Bűnügyi technikusok által rögzített képek.</p>
+                    
+                    <div id="digital-gallery" style="display: none; margin-top: 15px;">
+                        <div class="image-gallery">
+                            <img src="kep1.jpg" alt="Bizonyíték 1" class="evidence-img" onclick="window.open(this.src)">
+                            <img src="kep2.jpg" alt="Bizonyíték 2" class="evidence-img" onclick="window.open(this.src)">
+                            <div id="locked-files" class="evidence-img locked-box" onclick="accessDenied()">
+                                TOVÁBBI 65 KÉP BETÖLTÉSE...
+                            </div>
+                        </div>
+                    </div>
+                    <span class="download-link" onclick="toggleDigitalFiles()">FÁJLOK MEGJELENÍTÉSE</span>
                 </div>
             </div>
 
-            <button onclick="location.reload()" style="background: none; border: 1px solid gray; color: gray; margin-top: 30px; padding: 10px; cursor: pointer;">RENDSZER LEZÁRÁSA</button>
+            <div id="system-chat" class="chat-container hidden">
+    <div class="chat-header">RENDSZERÜZENETEK</div>
+    <div id="chat-message" class="chat-body"></div>
+            </div>
+            <button class="exit-btn" onclick="location.reload()">RENDSZER LEZÁRÁSA</button>
         </div>
     </div>
 
-    <script>
-        const VALID_CODE = "05010/1142/2026.bü.";
-        const DEBUG_CODE = "1"; // Gyors teszteléshez
-        
-        function toggleDigitalFiles() {
-    const gallery = document.getElementById('digital-gallery');
-    if (gallery.style.display === 'none' || gallery.style.display === '') {
-        gallery.style.display = 'block';
-    } else {
-        gallery.style.display = 'none';
-    }
-}
-
-        function processLogin() {
-            const input = document.getElementById('access-code');
-            const msg = document.getElementById('status-msg');
-            const container = document.getElementById('main-container');
-
-            if (input.value.trim() === VALID_CODE || input.value.trim() === DEBUG_CODE) {
-                // SIKERES LOGIN ANIMÁCIÓ
-                msg.innerText = "AZONOSÍTÁS SIKERES...";
-                msg.style.color = "var(--success-green)";
-                input.style.borderColor = "var(--success-green)";
-                
-                setTimeout(() => {
-                    // LOGIN ELTŰNIK, TÖLTŐ MEGJELENIK
-                    document.getElementById('login-section').classList.add('hidden');
-                    document.getElementById('loading-screen').style.display = 'flex';
-                    
-                    // TÖLTÉS UTÁN ADATOK MEGJELENÍTÉSE
-                    setTimeout(() => {
-                        document.getElementById('loading-screen').classList.add('hidden');
-                        document.getElementById('evidence-section').classList.remove('hidden');
-                    }, 2600); // Kicsit hosszabb, mint a CSS animáció
-
-                }, 800);
-            } else {
-                // HIBA ANIMÁCIÓ
-                msg.innerText = "HOZZÁFÉRÉS MEGTAGADVA!";
-                msg.style.color = "var(--error-red)";
-                container.classList.add('error-shake');
-                setTimeout(() => container.classList.remove('error-shake'), 500);
-            }
-        }
-
-        // Személyi adatok lenyitása
-        function toggleDetails() {
-            const details = document.getElementById('personal-data');
-            if (details.style.display === 'block') {
-                details.style.display = 'none';
-            } else {
-                details.style.display = 'block';
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
