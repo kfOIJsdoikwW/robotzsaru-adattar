@@ -55,7 +55,7 @@ function accessDenied() {
 
     // 2. Chatbox megjelenítése és üzenet beírása
     chatBox.classList.remove('hidden');
-    chatMsg.innerText = "RENDSZERÜZENET: Jogosultság megtagadva. (Lvl 4 hozzáférés szükséges)";
+    chatMsg.innerText = "RENDSZERÜZENET: Jogosultság megtagadva. (Err. #0012)";
     chatMsg.style.color = "var(--error-red)";
 
     // 3. Rázkódás
