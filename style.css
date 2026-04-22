@@ -6,6 +6,13 @@
     --success-green: #00ff88;
 }
 
+/* GLOBÁLIS JAVÍTÁS: Ez megakadályozza, hogy bármi elcsússzon mobilon */
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+}
+
 body { 
     background-color: var(--bg-dark); 
     color: var(--police-blue); 
@@ -14,38 +21,8 @@ body {
     align-items: center; 
     justify-content: center; 
     min-height: 100vh; 
-    margin: 0; 
     padding: 20px;
     overflow-x: hidden;
-}
-
-.chat-container {
-    margin-top: 20px;
-    border: 1px solid var(--error-red);
-    background: rgba(255, 0, 0, 0.05);
-    text-align: left;
-    padding: 10px;
-    font-family: 'Courier New', Courier, monospace;
-    border-radius: 3px;
-    animation: fadeIn 0.3s;
-}
-
-.chat-header {
-    font-size: 0.6rem;
-    color: var(--error-red);
-    border-bottom: 1px solid var(--error-red);
-    margin-bottom: 5px;
-    letter-spacing: 2px;
-}
-
-.chat-body {
-    font-size: 0.8rem;
-    font-weight: bold;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
 }
 
 .dashboard { 
@@ -60,18 +37,21 @@ body {
     position: relative;
 }
 
-h2 { text-transform: uppercase; letter-spacing: 3px; border-bottom: 1px solid var(--police-blue); padding-bottom: 15px; }
+h2 { text-transform: uppercase; letter-spacing: 3px; border-bottom: 1px solid var(--police-blue); padding-bottom: 15px; margin-bottom: 10px; }
 
+/* AZ ÜGYIRATSZÁM MEZŐ FORMÁZÁSA */
 input { 
     background: var(--dark-blue); 
     border: 1px solid var(--police-blue); 
     color: #ffffff; 
     padding: 15px; 
-    width: 80%;
+    width: 80%; /* Asztali nézeten marad a 80% */
+    max-width: 100%; /* Biztonsági korlát */
     text-align: center; 
     font-size: 1.1rem;
     margin-bottom: 30px; 
     outline: none;
+    display: inline-block;
 }
 
 button.main-btn { 
@@ -103,7 +83,6 @@ button.main-btn:hover { background: #fff; box-shadow: 0 0 15px #fff; }
     background: rgba(255, 255, 255, 0.05);
     padding: 15px;
     border-left: 4px solid var(--police-blue);
-    transition: 0.3s;
 }
 
 .profile-img {
@@ -136,13 +115,10 @@ button.main-btn:hover { background: #fff; box-shadow: 0 0 15px #fff; }
     cursor: pointer;
 }
 
-.download-link:hover { background: var(--police-blue); color: var(--bg-dark); }
-
 /* Galéria */
 .digital-evidence { grid-column: span 2; border: 1px dashed var(--police-blue); text-align: center; }
 .image-gallery { display: flex; justify-content: space-around; margin-top: 15px; gap: 10px; }
-.evidence-img { width: 30%; height: 100px; background: #111; border: 1px solid var(--police-blue); object-fit: cover; cursor: pointer; transition: 0.3s; }
-.evidence-img:hover { transform: scale(1.05); }
+.evidence-img { width: 30%; height: 100px; background: #111; border: 1px solid var(--police-blue); object-fit: cover; cursor: pointer; }
 
 .locked-box {
     display: flex;
@@ -155,6 +131,15 @@ button.main-btn:hover { background: #fff; box-shadow: 0 0 15px #fff; }
     border: 1px dashed var(--police-blue);
 }
 
+.chat-container {
+    margin-top: 20px;
+    border: 1px solid var(--error-red);
+    background: rgba(255, 0, 0, 0.05);
+    text-align: left;
+    padding: 10px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
 .exit-btn {
     background: none;
     border: 1px solid gray;
@@ -162,67 +147,51 @@ button.main-btn:hover { background: #fff; box-shadow: 0 0 15px #fff; }
     margin-top: 30px;
     padding: 10px 20px;
     cursor: pointer;
-    transition: 0.3s;
+    width: 100%;
 }
-.exit-btn:hover { color: white; border-color: white; }
 
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-10px); }
-    75% { transform: translateX(10px); }
-}
-.error-shake { animation: shake 0.2s ease-in-out 0s 2; border-color: var(--error-red) !important; }
-
-/* Loader */
-#loading-screen { flex-direction: column; align-items: center; justify-content: center; }
-.loader-bar { width: 300px; height: 4px; background: #111; margin-top: 20px; overflow: hidden; }
-.loader-progress { width: 0%; height: 100%; background: var(--police-blue); box-shadow: 0 0 15px var(--police-blue); animation: load 2.5s ease-in-out forwards; }
+/* Animációk */
 @keyframes load { 0% { width: 0%; } 100% { width: 100%; } }
+.loader-bar { width: 300px; max-width: 100%; height: 4px; background: #111; margin-top: 20px; overflow: hidden; display: inline-block;}
+.loader-progress { width: 0%; height: 100%; background: var(--police-blue); animation: load 2.5s ease-in-out forwards; }
 
-/* --- MOBILBARÁT KIEGÉSZÍTÉS --- */
+/* --- MOBIL SPECIFIKUS JAVÍTÁSOK --- */
 @media (max-width: 600px) {
     .dashboard {
-        padding: 20px 15px;
+        padding: 30px 15px; /* Kisebb belső margó, hogy elférjenek a dolgok */
     }
-    
+
     h2 {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         letter-spacing: 1px;
     }
 
     input {
-        width: 100%;
+        width: 95%; /* Mobilon majdnem teljes szélesség, de nem ér a széléhez */
         font-size: 1rem;
+        padding: 12px;
     }
 
     button.main-btn {
-        width: 100%;
-        padding: 15px 20px;
+        width: 95%; /* A gomb is igazodik az inputhoz */
+        padding: 12px;
     }
 
     .evidence-grid {
-        grid-template-columns: 1fr; /* Egy oszlop mobilon */
-        margin-top: 20px;
+        grid-template-columns: 1fr; /* Egymás alá kerülnek a kártyák */
     }
 
     .digital-evidence {
-        grid-column: span 1; /* Ne nyúljon át, maradjon egy kártya szélesség */
+        grid-column: span 1;
     }
 
-    .profile-img {
-        width: 50px;
-        height: 50px;
-    }
-
-    .loader-bar {
-        width: 80%;
-    }
-    
     .image-gallery {
-        flex-wrap: wrap; /* Ha nem férnének el a képek */
+        flex-direction: row;
+        justify-content: center;
+        gap: 5px;
     }
-    
+
     .evidence-img {
-        height: 80px;
+        height: 70px; /* Kicsit kisebb képek mobilon */
     }
 }
