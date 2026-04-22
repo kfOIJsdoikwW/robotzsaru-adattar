@@ -155,7 +155,6 @@ button.main-btn:hover { background: #fff; box-shadow: 0 0 15px #fff; }
     border: 1px dashed var(--police-blue);
 }
 
-/* Gombok és animációk */
 .exit-btn {
     background: none;
     border: 1px solid gray;
@@ -179,3 +178,51 @@ button.main-btn:hover { background: #fff; box-shadow: 0 0 15px #fff; }
 .loader-bar { width: 300px; height: 4px; background: #111; margin-top: 20px; overflow: hidden; }
 .loader-progress { width: 0%; height: 100%; background: var(--police-blue); box-shadow: 0 0 15px var(--police-blue); animation: load 2.5s ease-in-out forwards; }
 @keyframes load { 0% { width: 0%; } 100% { width: 100%; } }
+
+/* --- MOBILBARÁT KIEGÉSZÍTÉS --- */
+@media (max-width: 600px) {
+    .dashboard {
+        padding: 20px 15px;
+    }
+    
+    h2 {
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+    }
+
+    input {
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    button.main-btn {
+        width: 100%;
+        padding: 15px 20px;
+    }
+
+    .evidence-grid {
+        grid-template-columns: 1fr; /* Egy oszlop mobilon */
+        margin-top: 20px;
+    }
+
+    .digital-evidence {
+        grid-column: span 1; /* Ne nyúljon át, maradjon egy kártya szélesség */
+    }
+
+    .profile-img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .loader-bar {
+        width: 80%;
+    }
+    
+    .image-gallery {
+        flex-wrap: wrap; /* Ha nem férnének el a képek */
+    }
+    
+    .evidence-img {
+        height: 80px;
+    }
+}
